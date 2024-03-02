@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Атбаш Шифрование</title>
+  <style>
+    textarea {
+      width: 100%;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+
+<label for="inputText">Введите текст:</label>
+<textarea id="inputText" oninput="адаптироватьТекстовоеПоле(this)"></textarea>
+
+<button onclick="шифровать()">Зашифровать</button>
+
+<label for="outputText">Зашифрованный текст:</label>
+<textarea id="outputText" readonly></textarea>
+
+<script>
+function атбашШифр(текст) {
+  const алфавит = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let зашифрованныйТекст = '';
+
+  for (let i = 0; i < текст.length; i++) {
+    const символ = текст[i].toUpperCase();
+    if (алфавит.includes(символ)) {
+      const индекс = алфавит.indexOf(символ);
+      const обратныйСимвол = алфавит[алфавит.length - 1 - индекс];
+      зашифрованныйТекст += (текст[i] === символ) ? обратныйСимвол : обратныйСимвол.toLowerCase();
+    } else {
+      зашифрованныйТекст += текст[i];
+    }
+  }
+
+  return зашифрованныйТекст;
+}
+
+function шифровать() {
+  const исходныйТекст = document.getElementById("inputText").value;
+  const зашифрованныйТекст = атбашШифр(исходныйТекст);
+  document.getElementById("outputText").value = зашифрованныйТекст;
+}
+
+function адаптироватьТекстовоеПоле(поле) {
+  поле.style.height = 'auto';
+  поле.style.height = (поле.scrollHeight) + 'px';
+}
+</script>
+
+</body>
+</html>
